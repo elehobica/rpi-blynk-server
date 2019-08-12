@@ -5,7 +5,7 @@
 FROM arm32v7/openjdk:11-jre
 MAINTAINER Yohei Murayama <muracchi@gmail.com>
 
-ENV BLYNK_SERVER_VERSION 0.41.9
+ENV BLYNK_SERVER_VERSION 0.41.10
 RUN mkdir /blynk
 RUN curl -L https://github.com/blynkkk/blynk-server/releases/download/v${BLYNK_SERVER_VERSION}/server-${BLYNK_SERVER_VERSION}.jar > /blynk/server.jar
 
