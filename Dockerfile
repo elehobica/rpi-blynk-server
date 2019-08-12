@@ -1,3 +1,7 @@
+# Copyright (c) 2019 Yohei Murayama
+# Released under the MIT license
+# https://opensource.org/licenses/mit-license.php
+
 FROM arm32v7/openjdk:11-jre
 MAINTAINER Yohei Murayama <muracchi@gmail.com>
 
