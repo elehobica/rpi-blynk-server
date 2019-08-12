@@ -3,7 +3,6 @@ FROM openjdk:11-jre AS builder
 MAINTAINER Yohei Murayama <muracchi@gmail.com>
 
 WORKDIR /go
-RUN apk add curl --no-cache
 RUN curl -L https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz | tar zxvf - -C . && mv qemu-3.0.0+resin-arm/qemu-arm-static .
 
 FROM arm32v7/openjdk:11-jre
