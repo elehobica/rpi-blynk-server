@@ -1,5 +1,5 @@
 # To set multiarch build for Docker hub automated build.
-FROM golang:alpine AS builder
+FROM openjdk:11-jre AS builder
 MAINTAINER Yohei Murayama <muracchi@gmail.com>
 
 WORKDIR /go
@@ -8,8 +8,6 @@ RUN curl -L https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/q
 
 FROM arm32v7/openjdk:11-jre
 COPY --from=builder /go/qemu-arm-static /usr/bin/
-
-WORKDIR /tmp
 
 ENV BLYNK_SERVER_VERSION 0.41.9
 RUN mkdir /blynk
