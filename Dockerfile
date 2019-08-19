@@ -13,8 +13,12 @@ RUN curl -L https://github.com/blynkkk/blynk-server/releases/download/v${BLYNK_S
 RUN mkdir /data
 
 # Create configuration folder. To persist data, map a file to /config/server.properties
-RUN mkdir /config && touch /config/server.properties
-VOLUME ["/config", "/data/backup"]
+RUN mkdir /config && \
+  touch /config/server.properties && \
+  touch /config/mail.properties && \
+  touch /config/sms.properties
+	
+VOLUME ["/data"]
 
 # IP port listing:
 # 8080: Hardware without ssl/tls support
@@ -22,4 +26,4 @@ VOLUME ["/config", "/data/backup"]
 EXPOSE 8080 9443
 
 WORKDIR /data
-ENTRYPOINT ["java", "-jar", "/blynk/server.jar", "-dataFolder", "/data", "-serverConfig", "/config/server.properties"]
+ENTRYPOINT ["java", "-jar", "/blynk/server.jar", "-dataFolder", "/data", "-serverConfig", "/config/server.properties", "-mailConfig", "/config/mail.properties", "-smsConfig", "/config/sms.properties"]
