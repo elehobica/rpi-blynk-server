@@ -7,26 +7,12 @@ MAINTAINER Yohei Murayama <muracchi@gmail.com>
 
 ENV BLYNK_SERVER_VERSION 0.41.10
 
-# Install curl
-RUN apt-get update \
-  && apt-get install -y curl \
-  && rm -rf /var/lib/apt/lists/*
-
-# Download server.jar
-RUN mkdir /blynk \
-  && curl -L https://github.com/blynkkk/blynk-server/releases/download/v${BLYNK_SERVER_VERSION}/server-${BLYNK_SERVER_VERSION}.jar > /blynk/server.jar
-
+COPY setup.sh /setup.sh
 COPY endpoint-blynk.sh /endpoint-blynk.sh
 
-# Create data folder. To persist data, map a volume to /data
-RUN mkdir /data
+# Setup container
+RUN /setup.sh
 
-# Create configuration folder. To persist data, map a file to /config/server.properties
-RUN mkdir /config && \
-  touch /config/server.properties && \
-  touch /config/mail.properties && \
-  touch /config/sms.properties
-	
 VOLUME ["/data"]
 
 # IP port listing:
