@@ -5,7 +5,7 @@
 FROM arm32v7/openjdk:11-jre-slim
 MAINTAINER Yohei Murayama <muracchi@gmail.com>
 
-ENV BLYNK_SERVER_VERSION 0.41.10
+ENV BLYNK_SERVER_VERSION 0.41.11
 
 COPY setup.sh /setup.sh
 COPY endpoint-blynk.sh /endpoint-blynk.sh
