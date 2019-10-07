@@ -9,11 +9,17 @@ all: java8 java11
 
 .PHONY: java8
 java8:
-	sudo docker build java8 --tag $(REPO):$(VER)-java8 --tag $(REPO):latest-java8
+	sudo docker build --build-arg BLYNK_SERVER_VERSION=$(VER) \
+	       	--build-arg JDK_PKG=openjdk8 \
+		--build-arg JAR_NAME=server-$(VER)-java8.jar \
+		-t $(REPO):$(VER)-java8 -t $(REPO):java8 .
 
 .PHONY: java11
 java11:
-	sudo docker build java11 --tag $(REPO):$(VER)-java11 --tag $(REPO):latest-java11 --tag $(REPO):latest
+	sudo docker build --build-arg BLYNK_SERVER_VERSION=$(VER) \
+		--build-arg JDK_PKG=openjdk11 \
+		--build-arg JAR_NAME=server-$(VER).jar \
+		-t $(REPO):$(VER)-java11 -t $(REPO):java11 --tag $(REPO):latest .
 
 .PHONY: push
 push:
