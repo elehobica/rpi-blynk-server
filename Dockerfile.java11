@@ -2,12 +2,12 @@
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
 
-FROM alpine:latest
+FROM arm32v7/openjdk:11-jre-slim
 MAINTAINER Yohei Murayama <muracchi@gmail.com>
 
-RUN apk update \
- && apk --no-cache add openjdk8 curl \
- && rm -rf /var/cache/apk/*
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends curl \
+  && rm -rf /var/lib/apt/lists/*
 
 # Download server.jar
 ARG BLYNK_SERVER_VERSION
