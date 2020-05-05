@@ -9,16 +9,26 @@ all: java8 java11
 
 .PHONY: java8
 java8:
+	docker buildx build --platform=linux/arm/v7 --build-arg BLYNK_SERVER_VERSION=$(VER) \
+		--build-arg JAVA_PKG=openjdk8-jre --build-arg JAR_NAME=server-$(VER)-java8 \
+		-t $(REPO):$(VER)-java8-arm .
 	docker build --build-arg BLYNK_SERVER_VERSION=$(VER) \
-		--build-arg JAR_NAME=server-$(VER)-java8 \
-		-t $(REPO):$(VER)-java8 -t $(REPO):java8 .
+		--build-arg JAVA_PKG=openjdk8-jre --build-arg JAR_NAME=server-$(VER)-java8 \
+		-t $(REPO):$(VER)-java8-arm64 .
+	docker manifest create $(REPO):$(VER)-java8 $(REPO):$(VER)-java8-arm $(REPO):$(VER)-java8-arm64
+	docker manifest annotate --arch arm $(REPO):$(VER)-java8 $(REPO):$(VER)-java8-arm
+	docker manifest annotate --arch arm64 $(REPO):$(VER)-java8 $(REPO):$(VER)-java8-arm64
+	docker manifest create $(REPO):java8 $(REPO):$(VER)-java8-arm $(REPO):$(VER)-java8-arm64
+	docker manifest annotate --arch arm $(REPO):java8 $(REPO):$(VER)-java8-arm
+	docker manifest annotate --arch arm64 $(REPO):java8 $(REPO):$(VER)-java8-arm64
 
 .PHONY: java11
 java11:
 	docker build --build-arg BLYNK_SERVER_VERSION=$(VER) \
-		--build-arg JAR_NAME=server-$(VER) \
-		-t $(REPO):$(VER)-java11 -t $(REPO):java11 -t $(REPO):latest -f Dockerfile.java11 .
+		--build-arg JAVA_PKG=openjdk11-jre-headless --build-arg JAR_NAME=server-$(VER) \
+		-t $(REPO):$(VER)-java11 -t $(REPO):java11 -t $(REPO):latest .
 
 .PHONY: push
 push:
-	docker push $(REPO)
+	docker push $(REPO):$(VER)-java11 $(REPO):java11 $(REPO):latest 
+	docker manifest push $(REPO):$(VER)-java8 $(REPO):java8

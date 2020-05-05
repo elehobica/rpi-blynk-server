@@ -5,9 +5,11 @@
 FROM alpine:latest
 MAINTAINER Yohei Murayama <muracchi@gmail.com>
 
+# Install java
+ARG JAVA_PKG
 RUN apk update \
- && apk --no-cache add openjdk8 curl \
- && rm -rf /var/cache/apk/*
+  && apk --no-cache add "${JAVA_PKG}" curl \
+  && rm -rf /var/cache/apk/*
 
 # Download server.jar
 ARG BLYNK_SERVER_VERSION
