@@ -13,14 +13,6 @@ RUN mkdir /blynk \
 # Create data folder. To persist data, map a volume to /data
 RUN mkdir /data
 
-# Create configuration folder. To persist data, map a file to /config/server.properties
-RUN mkdir /config && \
-  touch /config/server.properties && \
-  touch /config/mail.properties && \
-  touch /config/sms.properties
-
-COPY endpoint-blynk.sh /endpoint-blynk.sh
-
 VOLUME ["/data"]
 
 # IP port listing:
@@ -29,4 +21,5 @@ VOLUME ["/data"]
 EXPOSE 8080 9443
 
 WORKDIR /data
-ENTRYPOINT ["/endpoint-blynk.sh"]
+ENTRYPOINT [ "java", "-jar", "/blynk/server.jar" ]
+CMD [ "-dataFolder", "/data" ]
