@@ -2,7 +2,7 @@
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
 REPO = mura1008/rpi-blynk-server
-VER = 0.41.16
+VER = 0.41.17
 
 .PHONY: all
 all: java8 java11
