@@ -8,30 +8,30 @@ Runs your own [Blynk Server](https://github.com/blynkkk/blynk-server) in a Docke
 
 [Blynk](http://www.blynk.cc) is the "first drag-n-drop IoT app builder for Arduino, Raspberry Pi, ESP8266, SparkFun boards, and others." Super fun.
 
-## How To Use It
-
-Easy peasy:
+## How To Build
 
 ```sh
+$ git clone https://github.com/elehobica/rpi-blynk-server.git
+$ cd rpi-blynk-server
+$ vim server.properties
+$ sudo ./build.sh
+```
+
+## How To Use It
+
+* include your own server.properties file by mounting it into /config/server.properties
+* persist data, mount a directory into the container
+* forward IP ports from the host to the container
+
+```sh
+$ mkdir data
+$ sudo docker run -v $PWD/data:/data -v $PWD/server.properties:/config/server.properties -p 9443:9443 -p 8440:8440 -p 8080:8080 elehobica/rpi-blynk-server:v1 -dataFolder /data -serverConfig /config/server.properties
 docker run mura1008/rpi-blynk-server:latest
 ```
 
-To forward IP ports from the host to the container, do this:
+## Deploy
+$ sudo ./deploy.sh
 
-```sh
-docker run -p 8080:8080 -p 8441:8441 -p 9443:9443 mura1008/rpi-blynk-server:latest
-```
+## Login
 
-To persist data, mount a directory into the container:
-
-```sh
-docker run -v $(PWD):/data mura1008/rpi-blynk-server:latest
-```
-
-To include your own server.properties file, mount it into /config/server.properties
-
-```sh
-docker run -v $(PWD)/server.properties:/config/server.properties mura1008/rpi-blynk-server:latest
-```
-
-Or you can use a data volume in another container (check out different data volume techniques [here](https://docs.docker.com/engine/tutorials/dockervolumes/)).
+* login from https://(IP Address):9443/admin
